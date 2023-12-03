@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import {
   SDKProvider,
-  useSDK,
+  useSDKContext,
   useMainButton,
   useBackButton,
   useInitData,
@@ -94,7 +94,7 @@ function InitData() {
  * went wrong, and a loader if the SDK is warming up.
  */
 function DisplayGate({ children }) {
-  const { didInit, components, error } = useSDK();
+  const { didInit, components, error } = useSDKContext();
   const errorMessage = useMemo<null | string>(() => {
     if (!error) {
       return null;

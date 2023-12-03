@@ -1,5 +1,11 @@
-import { useEffect, useMemo, useState, type PropsWithChildren } from 'react';
-import { SDKProvider, useSDK, useMainButton, useBackButton, useInitData } from '@tma.js/sdk-react';
+import { useEffect, useMemo, useState } from "react";
+import {
+  SDKProvider,
+  useSDK,
+  useMainButton,
+  useBackButton,
+  useInitData,
+} from "@tma.js/sdk-react";
 
 function MainButtonTest() {
   const mainButton = useMainButton();
@@ -12,13 +18,13 @@ function MainButtonTest() {
     const onBackButtonClick = () => setCount((prevCount) => prevCount - 1);
 
     mainButton.enable().show();
-    mainButton.on('click', onMainButtonClick);
-    backButton.on('click', onBackButtonClick);
+    mainButton.on("click", onMainButtonClick);
+    backButton.on("click", onBackButtonClick);
 
     return () => {
-      mainButton.off('click', onMainButtonClick);
+      mainButton.off("click", onMainButtonClick);
       mainButton.hide();
-      backButton.off('click', onBackButtonClick);
+      backButton.off("click", onBackButtonClick);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -46,11 +52,9 @@ function InitData() {
 
   const initDataJson = useMemo(() => {
     if (!initData) {
-      return 'Init data is empty.';
+      return "Init data is empty.";
     }
-    const { authDate, chat, hash, canSendAfter, queryId, receiver, user, startParam } = initData;
-
-    return JSON.stringify({
+    const {
       authDate,
       chat,
       hash,
@@ -59,14 +63,27 @@ function InitData() {
       receiver,
       user,
       startParam,
-    }, null, ' ');
+    } = initData;
+
+    return JSON.stringify(
+      {
+        authDate,
+        chat,
+        hash,
+        canSendAfter,
+        queryId,
+        receiver,
+        user,
+        startParam,
+      },
+      null,
+      " "
+    );
   }, [initData]);
 
   return (
     <pre>
-      <code>
-        {initDataJson}
-      </code>
+      <code>{initDataJson}</code>
     </pre>
   );
 }
@@ -76,14 +93,14 @@ function InitData() {
  * application in case, the SDK is initialized, displays an error if something
  * went wrong, and a loader if the SDK is warming up.
  */
-function DisplayGate({ children }: PropsWithChildren) {
+function DisplayGate({ children }) {
   const { didInit, components, error } = useSDK();
   const errorMessage = useMemo<null | string>(() => {
     if (!error) {
       return null;
     }
 
-    return error instanceof Error ? error.message : 'Unknown error';
+    return error instanceof Error ? error.message : "Unknown error";
   }, [error]);
 
   // There were no calls of SDK's init function. It means, we did not
@@ -97,8 +114,8 @@ function DisplayGate({ children }: PropsWithChildren) {
     return (
       <>
         <p>
-          SDK was unable to initialize. Probably, current application is being used
-          not in Telegram Web Apps environment.
+          SDK was unable to initialize. Probably, current application is being
+          used not in Telegram Web Apps environment.
         </p>
         <blockquote>
           <p>{errorMessage}</p>

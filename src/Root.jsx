@@ -139,7 +139,7 @@ function DisplayGate({ children }) {
 /**
  * Root component of the whole project.
  */
-export function Root() {
+export default function Root() {
   return (
     <SDKProvider initOptions={{ debug: true, cssVars: true }}>
       <DisplayGate>

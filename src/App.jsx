@@ -1,5 +1,5 @@
 // pages/webapp.tsx
-import { useTelegram } from "lib/TelegramProvider";
+import { useTelegram } from "./TelegramProvider.tsx";
 
 const App = () => {
   const { user, webApp } = useTelegram();

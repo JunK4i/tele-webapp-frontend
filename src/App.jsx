@@ -1,24 +1,25 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// pages/webapp.tsx
+import { useTelegram } from "lib/TelegramProvider";
 
-function App() {
+const App = () => {
+  const { user, webApp } = useTelegram();
+  console.log(user, webApp);
+
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <p>Choo Choo! This is an example of a Vite + React app running on Railway.</p>
-      </div>
-    </>
-  )
-}
+    <div>
+      {user ? (
+        <div>
+          <h1>Welcome {user?.username}</h1>
+          User data:
+          <pre>{JSON.stringify(user, null, 2)}</pre>
+          Eniter Web App data:
+          <pre>{JSON.stringify(webApp, null, 2)}</pre>
+        </div>
+      ) : (
+        <div>Make sure web app is opened from telegram client</div>
+      )}
+    </div>
+  );
+};
 
-export default App
+export default App;

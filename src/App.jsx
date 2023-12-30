@@ -9,7 +9,7 @@ const App = () => {
     <div>
       {user ? (
         <div>
-          <h1>Welcome {user?.username}</h1>
+          <h1 className="font-underline">Welcome {user?.username}</h1>
           User data:
           <pre>{JSON.stringify(user, null, 2)}</pre>
           Eniter Web App data:

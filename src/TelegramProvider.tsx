@@ -51,7 +51,7 @@ export const TelegramProvider: React.FC<TelegramProviderProps> = ({
   const handleReady = async () => {
     const webApp = (window as any).Telegram?.WebApp;
     const response = await fetch(
-      `${import.meta.env.VITE_BACKEND_URL}/validate-init`,
+      `${import.meta.env.VITE_SERVER_URL}/validate-init`,
       {
         method: "POST",
         headers: {

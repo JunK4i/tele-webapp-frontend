@@ -73,6 +73,7 @@ export const TelegramProvider: React.FC<TelegramProviderProps> = ({
       telegramWebApp.ready();
       setWebApp(telegramWebApp);
     }
+    console.log(import.meta.env.VITE_BACKEND_URL, import.meta.env.BACKEND_URL);
   }, []);
 
   // Memoize so there is no re-render when the value object is the same

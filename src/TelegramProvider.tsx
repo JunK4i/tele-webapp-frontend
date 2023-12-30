@@ -42,7 +42,7 @@ export const TelegramProvider: React.FC<TelegramProviderProps> = ({
   children,
 }) => {
   const [webApp, setWebApp] = useState<IWebApp | null>(null);
-  const [logs, setLogs] = useState<string[]>([]);
+  const [logs, setLogs] = useState<string[]>(["Logs"]);
 
   useScript("https://telegram.org/js/telegram-web-app.js");
 
@@ -72,17 +72,16 @@ export const TelegramProvider: React.FC<TelegramProviderProps> = ({
   useEffect(() => {
     // This event is fired when the web app is ready, send to backend to validate init data.
     const handleReady = async () => {
-      if (webApp) {
-        const response = await fetch("/validate-init", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(webApp.initDataUnsafe),
-        });
-        const data = await response.json();
-        appendLog(JSON.stringify(data));
-      }
+      const webApp = (window as any).Telegram?.WebApp;
+      const response = await fetch("/validate-init", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(webApp.initDataUnsafe),
+      });
+      const data = await response.json();
+      appendLog(JSON.stringify(data));
     };
 
     window.addEventListener("ready", handleReady);

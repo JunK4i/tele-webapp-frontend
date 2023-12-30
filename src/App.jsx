@@ -7,6 +7,10 @@ const App = () => {
 
   return (
     <div>
+      <div className="text-black text-7xl">
+        Logs:
+        <pre>{JSON.stringify(logs, null, 2)}</pre>
+      </div>
       {user ? (
         <div>
           <h1>Welcome {user?.username}</h1>
@@ -18,10 +22,6 @@ const App = () => {
       ) : (
         <div>Make sure web app is opened from telegram client</div>
       )}
-      <div>
-        Logs:
-        <pre>{JSON.stringify(logs, null, 2)}</pre>
-      </div>
     </div>
   );
 };

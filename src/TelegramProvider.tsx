@@ -42,7 +42,7 @@ export const TelegramProvider: React.FC<TelegramProviderProps> = ({
   children,
 }) => {
   const [webApp, setWebApp] = useState<IWebApp | null>(null);
-  const [logs, setLogs] = useState<string[]>(["Logs"]);
+  const [logs, setLogs] = useState<string[]>([]);
 
   useScript("https://telegram.org/js/telegram-web-app.js");
 

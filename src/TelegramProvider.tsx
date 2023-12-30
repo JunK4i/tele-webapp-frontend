@@ -7,6 +7,7 @@ import React, {
   useState,
   useCallback,
 } from "react";
+import axios from "axios";
 
 import type { IWebApp, ITelegramUser } from "./types";
 
@@ -50,17 +51,16 @@ export const TelegramProvider: React.FC<TelegramProviderProps> = ({
 
   const handleReady = async () => {
     const webApp = (window as any).Telegram?.WebApp;
-    const response = await fetch(
-      `${import.meta.env.VITE_SERVER_URL}/validate-init`,
+    const response = await axios.post(
+      `${import.meta.env.SERVER_URL}/validate-init`,
+      webApp.initDataUnsafe,
       {
-        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(webApp.initDataUnsafe),
       }
     );
-    const data = await response.json();
+    const data = response.data;
     // appendLog(JSON.stringify(data));
     console.log("validate, repsonse", data);
   };

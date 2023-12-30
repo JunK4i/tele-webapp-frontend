@@ -44,6 +44,23 @@ export const TelegramProvider: React.FC<TelegramProviderProps> = ({
   const [webApp, setWebApp] = useState<IWebApp | null>(null);
   const [logs, setLogs] = useState<string[]>([]);
 
+  const appendLog = useCallback((message: string) => {
+    setLogs((currentLogs) => [...currentLogs, message]);
+  }, []);
+
+  const handleReady = async () => {
+    const webApp = (window as any).Telegram?.WebApp;
+    const response = await fetch("/validate-init", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(webApp.initDataUnsafe),
+    });
+    const data = await response.json();
+    appendLog(JSON.stringify(data));
+  };
+
   useScript("https://telegram.org/js/telegram-web-app.js");
 
   useEffect(() => {
@@ -52,10 +69,6 @@ export const TelegramProvider: React.FC<TelegramProviderProps> = ({
       telegramWebApp.ready();
       setWebApp(telegramWebApp);
     }
-  }, []);
-
-  const appendLog = useCallback((message: string) => {
-    setLogs((currentLogs) => [...currentLogs, message]);
   }, []);
 
   // Memoize so there is no re-render when the value object is the same
@@ -71,24 +84,9 @@ export const TelegramProvider: React.FC<TelegramProviderProps> = ({
 
   useEffect(() => {
     // This event is fired when the web app is ready, send to backend to validate init data.
-    const handleReady = async () => {
-      const webApp = (window as any).Telegram?.WebApp;
-      const response = await fetch("/validate-init", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(webApp.initDataUnsafe),
-      });
-      const data = await response.json();
-      appendLog(JSON.stringify(data));
-    };
-
-    window.addEventListener("ready", handleReady);
-
-    return () => {
-      window.removeEventListener("ready", handleReady);
-    };
+    if (webApp) {
+      handleReady();
+    }
   }, [webApp]);
 
   return (

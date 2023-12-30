@@ -58,6 +58,7 @@ export const TelegramProvider: React.FC<TelegramProviderProps> = ({
         headers: {
           "Content-Type": "application/json",
         },
+        withCredentials: true,
       }
     );
     const data = response.data;

@@ -14,8 +14,8 @@ export interface ITelegramContext {
   webApp?: IWebApp;
   user?: ITelegramUser;
   unsafeData?: any; // Add type if available,
-  logs?: string[];
-  appendLog?: (message: string) => void;
+  // logs?: string[];
+  // appendLog?: (message: string) => void;
 }
 
 interface TelegramProviderProps {
@@ -42,11 +42,11 @@ export const TelegramProvider: React.FC<TelegramProviderProps> = ({
   children,
 }) => {
   const [webApp, setWebApp] = useState<IWebApp | null>(null);
-  const [logs, setLogs] = useState<string[]>([]);
+  // const [logs, setLogs] = useState<string[]>([]);
 
-  const appendLog = useCallback((message: string) => {
-    setLogs((currentLogs) => [...currentLogs, message]);
-  }, []);
+  // const appendLog = useCallback((message: string) => {
+  //   setLogs((currentLogs) => [...currentLogs, message]);
+  // }, []);
 
   const handleReady = async () => {
     const webApp = (window as any).Telegram?.WebApp;
@@ -58,7 +58,8 @@ export const TelegramProvider: React.FC<TelegramProviderProps> = ({
       body: JSON.stringify(webApp.initDataUnsafe),
     });
     const data = await response.json();
-    appendLog(JSON.stringify(data));
+    // appendLog(JSON.stringify(data));
+    console.log(data);
   };
 
   useScript("https://telegram.org/js/telegram-web-app.js");

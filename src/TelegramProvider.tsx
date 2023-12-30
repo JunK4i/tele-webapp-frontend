@@ -50,13 +50,16 @@ export const TelegramProvider: React.FC<TelegramProviderProps> = ({
 
   const handleReady = async () => {
     const webApp = (window as any).Telegram?.WebApp;
-    const response = await fetch(`/validate-init`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(webApp.initDataUnsafe),
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}/validate-init`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(webApp.initDataUnsafe),
+      }
+    );
     const data = await response.json();
     // appendLog(JSON.stringify(data));
     console.log("validate, repsonse", data);
@@ -69,11 +72,6 @@ export const TelegramProvider: React.FC<TelegramProviderProps> = ({
     if (telegramWebApp) {
       telegramWebApp.ready();
       setWebApp(telegramWebApp);
-      console.log(
-        "vite env",
-        import.meta.env.VITE_BACKEND_URL,
-        import.meta.env.BACKEND_URL
-      );
     }
   }, []);
 

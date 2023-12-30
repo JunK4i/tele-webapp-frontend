@@ -59,7 +59,7 @@ export const TelegramProvider: React.FC<TelegramProviderProps> = ({
     });
     const data = await response.json();
     // appendLog(JSON.stringify(data));
-    console.log(data);
+    console.log("validate, repsonse", data);
   };
 
   useScript("https://telegram.org/js/telegram-web-app.js");
@@ -70,6 +70,7 @@ export const TelegramProvider: React.FC<TelegramProviderProps> = ({
       telegramWebApp.ready();
       setWebApp(telegramWebApp);
       console.log(
+        "vite env",
         import.meta.env.VITE_BACKEND_URL,
         import.meta.env.BACKEND_URL
       );

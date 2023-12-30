@@ -3,7 +3,7 @@ import { useTelegram } from "./TelegramProvider.tsx";
 
 const App = () => {
   const { user, webApp, logs } = useTelegram();
-  console.log(user, webApp);
+  console.log("user, webapp", user, webApp);
 
   return (
     <div>

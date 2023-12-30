@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useMemo,
   useState,
+  useCallback,
 } from "react";
 
 import type { IWebApp, ITelegramUser } from "./types";
@@ -12,7 +13,9 @@ import type { IWebApp, ITelegramUser } from "./types";
 export interface ITelegramContext {
   webApp?: IWebApp;
   user?: ITelegramUser;
-  unsafeData?: any; // Add type if available
+  unsafeData?: any; // Add type if available,
+  logs?: string[];
+  appendLog?: (message: string) => void;
 }
 
 interface TelegramProviderProps {
@@ -39,6 +42,7 @@ export const TelegramProvider: React.FC<TelegramProviderProps> = ({
   children,
 }) => {
   const [webApp, setWebApp] = useState<IWebApp | null>(null);
+  const [logs, setLogs] = useState<string[]>([]);
 
   useScript("https://telegram.org/js/telegram-web-app.js");
 
@@ -48,6 +52,10 @@ export const TelegramProvider: React.FC<TelegramProviderProps> = ({
       telegramWebApp.ready();
       setWebApp(telegramWebApp);
     }
+  }, []);
+
+  const appendLog = useCallback((message: string) => {
+    setLogs((currentLogs) => [...currentLogs, message]);
   }, []);
 
   // Memoize so there is no re-render when the value object is the same
@@ -73,7 +81,7 @@ export const TelegramProvider: React.FC<TelegramProviderProps> = ({
           body: JSON.stringify(webApp.initDataUnsafe),
         });
         const data = await response.json();
-        // Handle the data as needed
+        appendLog(JSON.stringify(data));
       }
     };
 

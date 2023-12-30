@@ -2,14 +2,14 @@
 import { useTelegram } from "./TelegramProvider.tsx";
 
 const App = () => {
-  const { user, webApp } = useTelegram();
+  const { user, webApp, logs } = useTelegram();
   console.log(user, webApp);
 
   return (
     <div>
       {user ? (
         <div>
-          <h1 className="font-underline">Welcome {user?.username}</h1>
+          <h1>Welcome {user?.username}</h1>
           User data:
           <pre>{JSON.stringify(user, null, 2)}</pre>
           Eniter Web App data:
@@ -18,6 +18,10 @@ const App = () => {
       ) : (
         <div>Make sure web app is opened from telegram client</div>
       )}
+      <div>
+        Logs:
+        <pre>{JSON.stringify(logs, null, 2)}</pre>
+      </div>
     </div>
   );
 };

@@ -52,7 +52,7 @@ export const TelegramProvider: React.FC<TelegramProviderProps> = ({
   const handleReady = async () => {
     const webApp = (window as any).Telegram?.WebApp;
     const response = await axios.post(
-      `https://node-express-production-cb13.up.railway.app/validate-init`,
+      `https://node-express-production-cb13.up.railway.app/validate-init2`,
       webApp.initDataUnsafe,
       {
         headers: {

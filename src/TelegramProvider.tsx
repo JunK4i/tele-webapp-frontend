@@ -7,6 +7,8 @@ import React, {
   useState,
   useCallback,
 } from "react";
+import dotenv from "dotenv";
+dotenv.config();
 
 import type { IWebApp, ITelegramUser } from "./types";
 
@@ -50,7 +52,7 @@ export const TelegramProvider: React.FC<TelegramProviderProps> = ({
 
   const handleReady = async () => {
     const webApp = (window as any).Telegram?.WebApp;
-    const response = await fetch("/validate-init", {
+    const response = await fetch(`${process.env.SERVER_URL}/validate-init`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
